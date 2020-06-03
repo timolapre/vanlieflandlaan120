@@ -67,7 +67,7 @@ function getCleanScheduleMessage() {
   return message;
 }
 
-var j = schedule.scheduleJob("* 18 * * 4", function () {
+var j = schedule.scheduleJob("* 18 * * 3", function () {
   cleaningScheduleMessage = getCleanScheduleMessage();
 
   var transporter = nodemailer.createTransport({
