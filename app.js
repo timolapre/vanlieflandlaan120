@@ -9,64 +9,7 @@ var nodemailer = require("nodemailer");
 var hbs = require("hbs");
 var sqlite3 = require("sqlite3").verbose();
 
-const monthNames = [
-  "Januari",
-  "Februari",
-  "Maart",
-  "April",
-  "Mei",
-  "Juni",
-  "Juli",
-  "Augustus",
-  "September",
-  "October",
-  "November",
-  "December",
-];
-var week = 0;
-var tasks = ["Keuken", "Vloeren", "Apparaten", "Glas & papier", "Trappenhuis"];
-var namesDownstairs = ["Lowie", "Ada", "Floris", "Timo", "Andrea"];
-var namesDownstairswc = ["Andrea", "Ada", "Lowie", "Floris", "Timo"];
-var namesUpstairs = ["Froukje", "Celeste", "Jules", "Heleen", "Maas"];
-var namesUpstairswc = ["Maas", "Heleen", "Jules", "Celeste", "Froukje"];
-var cleaningScheduleMessage = "";
-
-Number.prototype.mod = function (n) {
-  return ((this % n) + n) % n;
-};
-
-function getCleanScheduleMessage() {
-  week++;
-  const today = new Date();
-  const tomorrow = new Date(today);
-  tomorrow.setDate(tomorrow.getDate() + 1);
-  var message = "Het is weer tijd om schoon te maken!!\n";
-  message +=
-    "Deadline: " +
-    tomorrow.getDate() +
-    " " +
-    monthNames[tomorrow.getMonth()] +
-    "\n\n";
-  for (let i = 0; i < tasks.length; i++) {
-    if (week % 2 == 0) {
-      message +=
-        namesDownstairs[i] +
-        ": " +
-        tasks[(i - week / 2).mod(tasks.length)] +
-        "\n";
-    } else {
-      message +=
-        namesUpstairs[i] +
-        ": " +
-        tasks[(-0.5 + i - week / 2).mod(tasks.length)] +
-        "\n";
-    }
-  }
-  message += "\nwc+douche benenden: " + namesDownstairswc[week.mod(5)] + "\n";
-  message += "wc+douche boven: " + namesUpstairswc[week.mod(5)] + "\n";
-  return message;
-}
-
+/*
 var j = schedule.scheduleJob("0 11 * * 7", function () {
   cleaningScheduleMessage = getCleanScheduleMessage();
 
@@ -93,6 +36,7 @@ var j = schedule.scheduleJob("0 11 * * 7", function () {
     }
   });
 });
+*/
 
 //DATABASE
 var db = new sqlite3.Database(":memory:");
@@ -104,7 +48,7 @@ db.serialize(function () {
   );
 });
 
-var apiRouter = require("./routes/api")(db, cleaningScheduleMessage);
+var apiRouter = require("./routes/api")(db);
 var indexRouter = require("./routes/index");
 
 //EXPRESS
