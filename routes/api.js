@@ -31,12 +31,12 @@ const monthNames = [
   "November",
   "December",
 ];
-var week = 1;
+var week = 6;
 var tasks = ["Keuken", "Vloeren", "Apparaten", "Glas & papier", "Trappenhuis"];
-var namesDownstairs = ["Lowie", "Ada", "Floris", "Timo", "Andrea"];
-var namesDownstairswc = ["Andrea", "Ada", "Lowie", "Floris", "Timo"];
-var namesUpstairs = ["Froukje", "Celeste", "Jules", "Heleen", "Maas"];
-var namesUpstairswc = ["Maas", "Heleen", "Jules", "Celeste", "Froukje"];
+var namesDownstairs = ["Lowie", "Caitlin", "Floris", "Timo", "Andrea"];
+var namesDownstairswc = ["Caitlin","Andrea", "Lowie", "Floris", "Timo"];
+var namesUpstairs = ["Froukje", "Megan", "Jules", "Ada", "Maas"];
+var namesUpstairswc = ["Maas", "Megan", "Ada", "Froukje", "Jules"];
 var cleaningScheduleMessage = "";
 
 Number.prototype.mod = function (n) {
@@ -44,8 +44,7 @@ Number.prototype.mod = function (n) {
 };
 
 function getCleanScheduleMessage() {
-  const today = new Date();
-  const tomorrow = new Date("6-8-2020");
+  var tomorrow = new Date("6-8-2020");
   tomorrow.setDate(tomorrow.getDate() + (week-1)*7);
   var message = "Het is weer tijd om schoon te maken!!\n";
   message +=
@@ -73,3 +72,5 @@ function getCleanScheduleMessage() {
   message += "wc+douche boven: " + namesUpstairswc[parseInt(week).mod(5)] + "\n";
   return message;
 }
+
+console.log(getCleanScheduleMessage());
