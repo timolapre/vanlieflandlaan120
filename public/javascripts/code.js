@@ -1,13 +1,17 @@
-function getSchoonmaakrooster(offset) {
-  $.post("api/cleaning", {weekOffset: offset}, function (data) {
-      $('#schoonmaakrooster').html(data);
+function getSchoonmaakrooster(offset, today = false) {
+  $.post("api/cleaning", { weekOffset: offset, today }, function (data) {
+    $('#schoonmaakrooster').html(data);
   });
 }
 
-function nextWeek(){
+function nextWeek() {
   getSchoonmaakrooster(1);
 }
 
-function previousWeek(){
+function previousWeek() {
   getSchoonmaakrooster(-1);
+}
+
+function thisWeek() {
+  getSchoonmaakrooster(0, true);
 }

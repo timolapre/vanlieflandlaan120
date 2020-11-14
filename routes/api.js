@@ -8,8 +8,18 @@ module.exports = function (db) {
   });
 
   router.post("/cleaning", function (req, res, next) {
-    if(req.body.weekOffset){
-      week += parseInt(req.body.weekOffset);
+    console.log(req.body)
+    if (req.body.today == 'false') {
+      if (req.body.weekOffset) {
+        console.log(typeof req.body.weekOffset);
+        week += parseInt(req.body.weekOffset);
+      }
+    } else if (req.body.today == 'true') {
+      var originalDate = new Date("6-8-2020");
+      var nextMonday = new Date();
+      nextMonday.setDate(nextMonday.getDate() + (1 + 7 - nextMonday.getDay()) % 7);
+      var weeks = Math.round((nextMonday - originalDate) / 604800000);
+      week = weeks + 1;
     }
     res.send(getCleanScheduleMessage().split("\n").join("</br>"));
   });
@@ -31,12 +41,12 @@ const monthNames = [
   "November",
   "December",
 ];
-var week = 6;
+var week = 24;
 var tasks = ["Keuken", "Vloeren", "Apparaten", "Glas & papier", "Trappenhuis"];
 var namesDownstairs = ["Lowie", "Caitlin", "Floris", "Timo", "Andrea"];
-var namesDownstairswc = ["Caitlin","Andrea", "Lowie", "Floris", "Timo"];
-var namesUpstairs = ["Froukje", "Megan", "Jules", "Ada", "Maas"];
-var namesUpstairswc = ["Maas", "Megan", "Ada", "Froukje", "Jules"];
+var namesDownstairswc = ["Caitlin", "Andrea", "Lowie", "Floris", "Timo"];
+var namesUpstairs = ["Froukje", "Megan", "Marijn", "Ada", "Maas"];
+var namesUpstairswc = ["Maas", "Megan", "Ada", "Froukje", "Marijn"];
 var cleaningScheduleMessage = "";
 
 Number.prototype.mod = function (n) {
@@ -45,7 +55,7 @@ Number.prototype.mod = function (n) {
 
 function getCleanScheduleMessage() {
   var tomorrow = new Date("6-8-2020");
-  tomorrow.setDate(tomorrow.getDate() + (week-1)*7);
+  tomorrow.setDate(tomorrow.getDate() + (week - 1) * 7);
   var message = "Het is weer tijd om schoon te maken!!\n";
   message +=
     "Deadline: " +

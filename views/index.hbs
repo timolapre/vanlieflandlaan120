@@ -1,9 +1,22 @@
-<button class="btn btn-primary" onclick="previousWeek()">Previous week</button>
-<button class="btn btn-primary" onclick="nextWeek()">Next week</button>
+<button class="btn btn-primary btn-lg" onclick="previousWeek()">&lt;</button>
+<button class="btn btn-primary btn-lg" onclick="thisWeek()">Deze week</button>
+<button class="btn btn-primary btn-lg" onclick="nextWeek()">&gt;</button>
+
+<button class="btn btn-primary btn-lg" onclick="CopyToClipboard()">Kopiëren</button>
 <br><br><br>
-<p id="schoonmaakrooster"></p>
+<h2 id="schoonmaakrooster"></h2>
 
 
 <script>
     getSchoonmaakrooster();
+
+    function CopyToClipboard() {
+        var r = document.createRange();
+        r.selectNode(document.getElementById('schoonmaakrooster'));
+        window.getSelection().removeAllRanges();
+        window.getSelection().addRange(r);
+        document.execCommand('copy');
+        window.getSelection().removeAllRanges();
+    }
+
 </script>
